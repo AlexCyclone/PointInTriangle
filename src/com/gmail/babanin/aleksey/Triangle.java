@@ -41,7 +41,7 @@ public class Triangle {
 
         summaryArea = triangleAB.area() + triangleBC.area() + triangleCA.area();
 
-        if (compareDouble(summaryArea, this.area())) {
+        if (this.compareDouble(summaryArea, this.area())) {
             return true;
         }
         return false;
@@ -88,9 +88,9 @@ public class Triangle {
 
     private boolean compareDouble(double a, double b) {
 
-        double tolerance = 10E-14;
+        double tolerance = 1E-14;
         double deviation = Math.abs(a - b);
-
+        
         if (deviation <= tolerance) {
             return true;
         }
