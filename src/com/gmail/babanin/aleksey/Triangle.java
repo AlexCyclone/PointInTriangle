@@ -9,9 +9,8 @@ public class Triangle {
     private double vertexCX;
     private double vertexCY;
 
-    public Triangle(double vertexAX, double vertexAY,
-                    double vertexBX, double vertexBY,
-                    double vertexCX, double vertexCY) {
+    public Triangle(double vertexAX, double vertexAY, double vertexBX,
+                    double vertexBY, double vertexCX, double vertexCY) {
 
         this.vertexAX = vertexAX;
         this.vertexAY = vertexAY;
@@ -22,6 +21,10 @@ public class Triangle {
     }
 
     public boolean pointInside(double pointCoordinateX, double pointCoordinateY) {
+
+        if (onEdge(pointCoordinateX, pointCoordinateY)) {
+            return true;
+        }
 
         double summaryArea;
 
@@ -48,6 +51,7 @@ public class Triangle {
     }
 
     public double area() {
+
         double area;
         double p;
 
@@ -80,17 +84,35 @@ public class Triangle {
     private double lengthCA() {
         double length;
 
-        length = Math.sqrt(Math.pow((this.vertexCX - this.vertexAX), 2)
+        length = Math.sqrt(Math.pow((this.vertexCX - this.vertexAX), 2) 
                            + Math.pow((this.vertexCY - this.vertexAY), 2));
 
         return length;
     }
 
+    private boolean onEdge(double pointCoordinateX, double pointCoordinateY) {
+        if (compareDouble((pointCoordinateX - this.vertexAX) / (this.vertexBX - this.vertexAX),
+                          (pointCoordinateY - this.vertexAY) / (this.vertexBY - this.vertexAY))) {
+            return true;
+        }
+
+        if (compareDouble((pointCoordinateX - this.vertexBX) / (this.vertexCX - this.vertexBX),
+                          (pointCoordinateY - this.vertexBY) / (this.vertexCY - this.vertexBY))) {
+            return true;
+        }
+
+        if (compareDouble((pointCoordinateX - this.vertexCX) / (this.vertexAX - this.vertexCX),
+                          (pointCoordinateY - this.vertexCY) / (this.vertexAY - this.vertexCY))) {
+            return true;
+        }
+        return false;
+    }
+
     private boolean compareDouble(double a, double b) {
 
-        double tolerance = 1E-14;
+        double tolerance = 1E-13;
         double deviation = Math.abs(a - b);
-        
+
         if (deviation <= tolerance) {
             return true;
         }
